@@ -1,0 +1,28 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>AHUB</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header th:fragment="header">
+    <div class="container">
+        <div id="branding">
+            <h1><span class="highlight">Article</span> hub</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/articles}">Articles</a></li>
+                <li><a th:href="@{/categories}">Categories</a></li>
+                <li><a th:href="@{/authors}">Authors</a></li>
+                <li><a id="logout" th:href="${'/logout'}">LOGOUT</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+</body>
+</html>
+

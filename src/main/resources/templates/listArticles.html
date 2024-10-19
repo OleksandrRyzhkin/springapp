@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Articles</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:insert="top :: header"></div>
+<h1>List of Articles</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>University</th>
+        <th>Author</th>
+        <th>Date</th>
+        <th>Is recent</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="article : ${articles}">
+        <td th:text="${article.name}"></td>
+        <td th:text="${article.university.name}"></td>
+        <td th:text="${article.author.name}"></td>
+        <td th:text="${article.createdDate}"></td>
+        <td th:text="${article.recent}"></td>
+
+        <td>
+            <a th:href="@{/articles/edit/{id}(id=${article.id})}">Edit</a>
+            <a th:href="@{/articles/delete/{id}(id=${article.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/articles/new}">Add New Article</a>
+<div th:insert="botom :: footer"></div>
+</body>
+</html>

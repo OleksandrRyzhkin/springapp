@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Article Form</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:insert="top :: header"></div>
+<h1 th:text="${article.id != null ? 'Edit Article' : 'Add New Article'}"></h1>
+<form method="post" th:action="@{${article.id != null ? '/articles/update/' + article.id : '/articles/add'}}"
+      th:object="${article}">
+    <label for="name">Name:</label>
+    <input hidden="true" name="createdDate" th:field="*{createdDate}"
+           th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
+    <input hidden="true" name="isRecent" th:field="*{recent}" th:value="${true}">
+    <input id="name" name="name" required th:field="*{name}" type="text"><br>
+    <label for="university">University:</label>
+    <select id="university" name="university" th:field="*{university.id}">
+        <option th:each="university : ${categories}" th:text="${university.name}" th:value="${university.id}"></option>
+    </select><br>
+    <select id="author" name="author" th:field="*{author.id}">
+        <option th:each="author : ${authors}" th:text="${author.name}" th:value="${author.id}"></option>
+    </select><br>
+    <label for="content">Content:</label>
+    <textarea id="content" name="content" required th:field="*{content}"></textarea><br>
+
+    <button type="submit">Submit</button>
+</form>
+<a th:href="@{/articles}">Back to Articles</a>
+<div th:insert="botom :: footer"></div>
+</body>
+</html>

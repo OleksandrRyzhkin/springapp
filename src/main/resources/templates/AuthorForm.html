@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>author Form</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:insert="top :: header"></div>
+<h1 th:text="${author.id != null ? 'Edit author' : 'Add New author'}"></h1>
+<form method="post" th:action="@{${author.id != null ? '/authors/update/' + author.id : '/authors/add'}}"
+      th:object="${author}">
+    <label for="name">Name:</label>
+    <input id="name" name="name" required th:field="*{name}" type="text"><br>
+    <label for="email">Email:</label>
+    <input id="email" name="email" required th:field="*{email}" type="email"><br>
+    <button type="submit">Submit</button>
+</form>
+<a th:href="@{/authors}">Back to authors</a>
+<div th:insert="botom :: footer"></div>
+</body>
+</html>

@@ -1,6 +1,7 @@
 package com.example.springbootsp.controllers;
 
 import com.example.springbootsp.models.University;
+import com.example.springbootsp.models.UniversityDto;
 import com.example.springbootsp.services.UniversityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,24 +28,24 @@ public class UniversityController {
     }
 
     @GetMapping
-    public List<University> getAllCategories() {
+    public List<UniversityDto> getAllCategories() {
         return universityService.getAllCategories();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<University> getUniversityById(@PathVariable Long id) {
+    public ResponseEntity<UniversityDto> getUniversityById(@PathVariable Long id) {
         return universityService.getUniversityById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public University createUniversity(@RequestBody University university) {
+    public UniversityDto createUniversity(@RequestBody UniversityDto university) {
         return universityService.createUniversity(university);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<University> updateUniversity(@PathVariable Long id, @RequestBody University universityDetails) {
+    public ResponseEntity<UniversityDto> updateUniversity(@PathVariable Long id, @RequestBody UniversityDto universityDetails) {
         return ResponseEntity.ok(universityService.updateUniversity(id, universityDetails));
     }
 

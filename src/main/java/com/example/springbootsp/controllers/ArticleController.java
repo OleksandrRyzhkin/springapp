@@ -1,6 +1,7 @@
 package com.example.springbootsp.controllers;
 
 import com.example.springbootsp.models.Article;
+import com.example.springbootsp.models.ArticleDto;
 import com.example.springbootsp.services.ArticleService;
 import com.example.springbootsp.services.UniversityService;
 import org.springframework.http.ResponseEntity;
@@ -29,24 +30,24 @@ public class ArticleController {
 
 
     @GetMapping
-    public List<Article> getAllArticles() {
+    public List<ArticleDto> getAllArticles() {
         return articleService.getAllArticles();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Article> getArticleById(@PathVariable Long id) {
+    public ResponseEntity<ArticleDto> getArticleById(@PathVariable Long id) {
         return articleService.getArticleById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Article createArticle(@RequestBody Article article) {
+    public ArticleDto createArticle(@RequestBody Article article) {
         return universityService.createArticle(article);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Article> updateArticle(@PathVariable Long id, @RequestBody Article articleDetails) {
+    public ResponseEntity<ArticleDto> updateArticle(@PathVariable Long id, @RequestBody ArticleDto articleDetails) {
         return ResponseEntity.ok(articleService.updateArticle(id, articleDetails));
     }
 

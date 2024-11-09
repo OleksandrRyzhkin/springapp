@@ -6,22 +6,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "categories")
-public class University {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UniversityDto {
     private Long id;
-
     private String name;
 
-    public University(Long id, String name) {
+    public UniversityDto(Long id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public University() {
     }
 
     public Long getId() {

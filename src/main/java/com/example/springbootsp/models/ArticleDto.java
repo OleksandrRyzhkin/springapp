@@ -1,36 +1,32 @@
 package com.example.springbootsp.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "articles")
-public class Article {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class ArticleDto {
     private Long id;
     private String name;
-    @ManyToOne()
-    @JoinColumn(name = "university_id")
+
     private University university;
     private boolean isRecent = true;
     private LocalDateTime createdDate = LocalDateTime.now();
-    @ManyToOne()
-    @JoinColumn(name = "author_id")
+
     private Author author;
     private String content;
 
-    public Article() {
+    public Article toArticle() {
+        return new Article(
+                this.id,
+                this.name,
+                this.university,
+                this.isRecent,
+                this.createdDate,
+                this.author,
+                this.content
+        );
     }
 
-    public Article(Long id, String name, University university, boolean isRecent, LocalDateTime createdDate, Author author, String content) {
+    public ArticleDto(Long id, String name, University university, boolean isRecent, LocalDateTime createdDate, Author author, String content) {
         this.id = id;
         this.name = name;
         this.university = university;

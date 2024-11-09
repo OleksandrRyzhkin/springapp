@@ -2,13 +2,14 @@ package com.example.springbootsp.services;
 
 import com.example.springbootsp.exception.ResourceNotFoundException;
 import com.example.springbootsp.models.Author;
+import com.example.springbootsp.models.AuthorDto;
 import com.example.springbootsp.repositories.AuthorRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -23,16 +24,25 @@ public class AuthorService {
         this.articleService = articleService;
     }
 
-    public List<Author> getAllAuthors() {
-        return authorRepository.findAll();
+    private AuthorDto convertToDto(Author author) {
+        return new AuthorDto(
+                author.getId(),
+                author.getName(),
+                author.getEmail()
+        );
     }
 
-    public Optional<Author> getAuthorById(Long id) {
-        return authorRepository.findById(id);
+    public List<AuthorDto> getAllAuthors() {
+        return authorRepository.findAll().stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    public Author createAuthor(Author author) {
-        return authorRepository.save(author);
+    public Optional<AuthorDto> getAuthorById(Long id) {
+        return authorRepository.findById(id).map(this::convertToDto);
+    }
+
+    public AuthorDto createAuthor(Author author) {
+        Author savedAuthor = authorRepository.save(author);
+        return convertToDto(savedAuthor);
     }
 
     public void deleteAuthor(Long id) {
@@ -41,13 +51,13 @@ public class AuthorService {
         authorRepository.delete(author);
     }
 
-    public Author updateAuthor(Long id, Author authorDetails) {
+    public AuthorDto updateAuthor(Long id, Author authorDetails) {
         Author author = authorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(AUTHOR_NOT_FOUND + id));
 
         author.setName(authorDetails.getName());
         author.setEmail(authorDetails.getEmail());
 
-        return authorRepository.save(author);
+        Author updatedAuthor = authorRepository.save(author);
+        return convertToDto(updatedAuthor);
     }
-
 }

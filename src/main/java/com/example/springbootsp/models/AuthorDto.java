@@ -6,22 +6,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "categories")
-public class University {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class AuthorDto {
+
     private Long id;
-
     private String name;
+    private String email;
 
-    public University(Long id, String name) {
+    public AuthorDto(Long id, String name, String email) {
         this.id = id;
         this.name = name;
-    }
-
-    public University() {
+        this.email = email;
     }
 
     public Long getId() {
@@ -38,5 +34,13 @@ public class University {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

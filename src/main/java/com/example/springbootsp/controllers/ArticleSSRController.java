@@ -2,6 +2,7 @@ package com.example.springbootsp.controllers;
 
 import com.example.springbootsp.exception.ResourceNotFoundException;
 import com.example.springbootsp.models.Article;
+import com.example.springbootsp.models.ArticleDto;
 import com.example.springbootsp.services.ArticleService;
 import com.example.springbootsp.services.AuthorService;
 import com.example.springbootsp.services.UniversityService;
@@ -32,7 +33,7 @@ public class ArticleSSRController {
 
     @GetMapping
     public String listArticles(Model model) {
-        List<Article> articles = articleService.getAllArticles();
+        List<ArticleDto> articles = articleService.getAllArticles();
         model.addAttribute("articles", articles);
         return "listArticles";
     }
@@ -47,7 +48,7 @@ public class ArticleSSRController {
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        Article article = articleService.getArticleById(id).orElseThrow(() -> new ResourceNotFoundException("Article not found"));
+        ArticleDto article = articleService.getArticleById(id).orElseThrow(() -> new ResourceNotFoundException("Article not found"));
         model.addAttribute("article", article);
         model.addAttribute("categories", universityService.getAllCategories());
         model.addAttribute("authors", aut.getAllAuthors());
@@ -61,7 +62,7 @@ public class ArticleSSRController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateArticle(@PathVariable Long id, @ModelAttribute Article article) {
+    public String updateArticle(@PathVariable Long id, @ModelAttribute ArticleDto article) {
         articleService.updateArticle(id, article);
         return "redirect:/articles";
     }

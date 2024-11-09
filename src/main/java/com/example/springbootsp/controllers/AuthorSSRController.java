@@ -2,6 +2,7 @@ package com.example.springbootsp.controllers;
 
 import com.example.springbootsp.exception.ResourceNotFoundException;
 import com.example.springbootsp.models.Author;
+import com.example.springbootsp.models.AuthorDto;
 import com.example.springbootsp.services.AuthorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +27,7 @@ public class AuthorSSRController {
 
     @GetMapping
     public String listAuthors(Model model) {
-        List<Author> authors = authorService.getAllAuthors();
+        List<AuthorDto> authors = authorService.getAllAuthors();
         model.addAttribute("authors", authors);
         return "listAuthors";
     }
@@ -39,7 +40,7 @@ public class AuthorSSRController {
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        Author author = authorService.getAuthorById(id).orElseThrow(() -> new ResourceNotFoundException("Author not found"));
+        AuthorDto author = authorService.getAuthorById(id).orElseThrow(() -> new ResourceNotFoundException("Author not found"));
         model.addAttribute("author", author);
         return "AuthorForm";
     }

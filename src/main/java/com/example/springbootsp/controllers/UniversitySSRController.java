@@ -2,6 +2,7 @@ package com.example.springbootsp.controllers;
 
 import com.example.springbootsp.exception.ResourceNotFoundException;
 import com.example.springbootsp.models.University;
+import com.example.springbootsp.models.UniversityDto;
 import com.example.springbootsp.services.UniversityService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +27,7 @@ class UniversitySSRController {
 
     @GetMapping
     public String listCategories(Model model) {
-        List<University> categories = universityService.getAllCategories();
+        List<UniversityDto> categories = universityService.getAllCategories();
         model.addAttribute("categories", categories);
         return "listUniversities";
     }
@@ -39,19 +40,19 @@ class UniversitySSRController {
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        University university = universityService.getUniversityById(id).orElseThrow(() -> new ResourceNotFoundException("University not found"));
+        UniversityDto university = universityService.getUniversityById(id).orElseThrow(() -> new ResourceNotFoundException("University not found"));
         model.addAttribute("university", university);
         return "UniversityForm";
     }
 
     @PostMapping("/add")
-    public String addUniversity(@ModelAttribute University university) {
+    public String addUniversity(@ModelAttribute UniversityDto university) {
         universityService.createUniversity(university);
         return "redirect:/categories";
     }
 
     @PostMapping("/update/{id}")
-    public String updateUniversity(@PathVariable Long id, @ModelAttribute University university) {
+    public String updateUniversity(@PathVariable Long id, @ModelAttribute UniversityDto university) {
         universityService.updateUniversity(id, university);
         return "redirect:/categories";
     }
